@@ -20,7 +20,21 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import { mapActions } from "vuex";
 
-export default class Hosts extends Vue {}
+@Options({
+  computed: {
+    ...mapActions('hosts', {
+      // readHosts: 'readHosts'
+    })
+  }
+})
+export default class Hosts extends Vue {
+  readHosts!: () => void;
+
+  mounted(): void {
+    // this.readHosts();
+  }
+}
 </script>

@@ -1,7 +1,15 @@
 export interface IHostsState {
-  hosts: [IHostStats] | [],
+  hosts: IHost[] | [],
   loading: boolean,
 };
+
+export interface IHost {
+  name: string,
+  label: string,
+  ip: string,
+  port: number,
+  stats: IHostStats | [],
+}
 
 export interface IHostStats {
   cpu: number,
@@ -56,4 +64,10 @@ export interface IFsDetails {
   used: number,
   free: number,
   usedPercent: number,
+};
+
+export interface IHostConfig {
+  label: string,
+  ip: string,
+  port: number,
 };

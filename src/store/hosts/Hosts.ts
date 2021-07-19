@@ -1,6 +1,7 @@
+import { parseHostsConfig } from '@/services/hosts.service';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import { IRootState } from '../Types';
-import { IHostsState, IHostStats } from './Types';
+import { IHost, IHostsState } from './Types';
 
 export enum mutators {
   LOADING = 'LOADING',
@@ -17,18 +18,18 @@ export const getters: GetterTree<IHostsState, IRootState> = {
 };
 
 export const actions: ActionTree<IHostsState, IRootState> = {
-  async getHosts({ dispatch }) {
-    dispatch(mutators.LOADING, true);
+  async readHosts({ commit }) {
+    commit(mutators.LOADING, true);
 
-    const hosts: [] = [];
+    const hosts: IHost[] = parseHostsConfig();
 
-    dispatch(mutators.SET_HOSTS, hosts);
-    dispatch(mutators.LOADING, false);
+    commit(mutators.SET_HOSTS, hosts);
+    commit(mutators.LOADING, false);
   },
 };
 
 export const mutations: MutationTree<IHostsState> = {
-  [mutators.SET_HOSTS](_state: IHostsState, hosts: [IHostStats]) {
+  [mutators.SET_HOSTS](_state: IHostsState, hosts: IHost[]) {
     _state.hosts = hosts;
   },
   [mutators.LOADING](_state: IHostsState, loading: boolean) {
