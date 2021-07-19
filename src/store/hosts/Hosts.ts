@@ -1,4 +1,5 @@
 import { parseHostsConfig } from '@/services/hosts.service';
+import axios from 'axios';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import { IRootState } from '../Types';
 import { IHost, IHostsState } from './Types';
@@ -14,17 +15,30 @@ export const state: IHostsState = {
 };
 
 export const getters: GetterTree<IHostsState, IRootState> = {
-  getHosts: (_state) => _state.hosts,
+  hosts: (_state) => _state.hosts,
+  loading: (_state) => _state.loading,
 };
 
 export const actions: ActionTree<IHostsState, IRootState> = {
-  async readHosts({ commit }) {
+  async getHosts({ commit, dispatch }) {
     commit(mutators.LOADING, true);
 
     const hosts: IHost[] = parseHostsConfig();
-
     commit(mutators.SET_HOSTS, hosts);
-    commit(mutators.LOADING, false);
+
+    dispatch('getAllHostsOverview');
+  },
+
+  async getAllHostsOverview({ commit, state }) {
+    commit(mutators.LOADING, true);
+
+    Promise.all(
+      state.hosts.map((host: IHost) => {
+        return axios
+          .get(`${host.url}/all`)
+          .then(({ data }) => console.log(data));
+      })
+    ).then((responses) => console.log(responses));
   },
 };
 

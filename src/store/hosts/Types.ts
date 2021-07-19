@@ -1,13 +1,12 @@
 export interface IHostsState {
-  hosts: IHost[] | [],
+  hosts: IHost[],
   loading: boolean,
 };
 
 export interface IHost {
   name: string,
   label: string,
-  ip: string,
-  port: number,
+  url: string,
   stats: IHostStats | [],
 }
 
@@ -70,4 +69,5 @@ export interface IHostConfig {
   label: string,
   ip: string,
   port: number,
+  ssl: boolean,
 };
