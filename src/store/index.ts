@@ -1,8 +1,8 @@
-import { createStore } from "vuex";
+import vuex from 'vuex';
+import hosts from './hosts/Hosts';
 
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+export default new vuex.Store({
+  modules: {
+    hosts
+  },
 });
