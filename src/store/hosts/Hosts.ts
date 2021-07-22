@@ -1,5 +1,5 @@
-import { getAllStats } from '@/api/hosts/Requests';
-import { parseHostsConfig } from '@/services/hosts/Service';
+import { getAllStats } from '@/api/Requests';
+import { parseHostsConfig } from '@/helpers/HostHelper';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import { IRootState } from '../Types';
 import { IHost, IHostsState } from './Types';

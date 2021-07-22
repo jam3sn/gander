@@ -6,7 +6,7 @@ import {
   IGlancesPerCpu,
   IGlancesSensor,
   IGlancesSystem,
-} from '@/api/hosts/Types';
+} from '@/api/Types';
 import {
   ICpuDetails,
   IFsDetails,

@@ -5,6 +5,7 @@ export interface IHostsState {
 export interface IHost {
   hostname: string,
   label: string,
+  ip: string,
   url: string,
   stats: IHostStats | null,
   loading: boolean,
