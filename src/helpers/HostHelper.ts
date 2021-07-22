@@ -1,4 +1,4 @@
-import { IHost } from '@/store/hosts/Types';
+import { HostStatus, IHost } from '@/store/hosts/Types';
 import config from '../../hosts.yaml';
 
 export function parseHostsConfig(): IHost[] {
@@ -23,7 +23,7 @@ export function parseHostsConfig(): IHost[] {
       ip: config[host].ip ?? null,
       url,
       stats: null,
-      loading: false,
+      status: HostStatus.DOWN,
     });
   }
 

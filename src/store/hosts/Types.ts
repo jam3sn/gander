@@ -8,7 +8,7 @@ export interface IHost {
   ip: string,
   url: string,
   stats: IHostStats | null,
-  loading: boolean,
+  status: HostStatus,
 }
 
 export interface IHostStats {
@@ -72,3 +72,9 @@ export interface IHostConfig {
   port: number,
   ssl: boolean,
 };
+
+export enum HostStatus {
+  UP = 'UP',
+  LOADING = 'LOADING',
+  DOWN = 'DOWN',
+}

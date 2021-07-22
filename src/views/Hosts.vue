@@ -7,7 +7,7 @@
     </div>
   </header>
   <main>
-    <div class="max-w-7xl mx-auto grid grid-cols-1 gap-5 sm:items-center md:grid-cols-2 sm:px-6 lg:px-8 xl:grid-cols-3">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 gap-5 sm:items-top md:grid-cols-2 sm:px-6 lg:px-8 xl:grid-cols-3">
       <Host v-for="host in hosts" :key="host.hostname" :host="host" />
     </div>
   </main>

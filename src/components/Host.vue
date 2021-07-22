@@ -13,14 +13,14 @@
         </p>
       </div>
 
-      <div class="rounded-full h-4 w-4" :class="[ host.loading ? 'bg-yellow-400 ' : 'bg-green-400' ]"></div>
+      <div class="rounded-full h-4 w-4" :class="`bg-${getStatus()}-400`"></div>
     </header>
 
-    <div v-if="host.loading" class="px-4 py-5">
+    <div v-if="host.status === statusTypes.LOADING" class="px-4 py-5">
       <p class="text-3xl font-semibold text-center text-gray-800">Loading...</p>
     </div>
 
-    <div v-else>
+    <div v-else-if="host.stats !== null">
       <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div class="px-4 py-5 overflow-hidden sm:p-6">
           <dt class="text-sm font-medium text-gray-500 truncate">
@@ -56,11 +56,15 @@
         </li>
       </ul>
     </div>
+
+    <div v-else class="px-4 py-5">
+      <p class="font-semibold text-center text-gray-800">Something went wrong while trying to query {{ host.hostname }}</p>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { IHost } from "@/store/hosts/Types";
+import { HostStatus, IHost } from "@/store/hosts/Types";
 import { Options, Vue } from "vue-class-component";
 
 @Options({
@@ -71,6 +75,7 @@ import { Options, Vue } from "vue-class-component";
 })
 export default class Hosts extends Vue {
   private host!: IHost;
+  private statusTypes = HostStatus;
 
   /**
    * Get Color
@@ -85,6 +90,16 @@ export default class Hosts extends Vue {
       return 'yellow-500';
     } else {
       return defaultColor;
+    }
+  }
+
+  private getStatus() {
+    if (this.host.status === HostStatus.UP) {
+      return 'green';
+    } else if (this.host.status === HostStatus.LOADING) {
+      return 'yellow';
+    } else {
+      return 'red';
     }
   }
 }

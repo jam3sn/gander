@@ -3,6 +3,8 @@
     <div class="py-10">
       <Hosts />
     </div>
+
+    <Alerts />
   </div>
 </template>
 
@@ -12,12 +14,14 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/vue';
+import Alerts from './components/Alerts/Alerts.vue';
 import Hosts from './views/Hosts.vue';
 import { Options, Vue } from "vue-class-component";
 import { ServerIcon } from '@heroicons/vue/solid';
 
 @Options({
   components: {
+    Alerts,
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
