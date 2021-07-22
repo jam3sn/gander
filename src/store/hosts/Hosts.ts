@@ -1,44 +1,50 @@
-import { parseHostsConfig } from '@/services/hosts.service';
-import axios from 'axios';
+import { getAllStats } from '@/api/hosts/Requests';
+import { parseHostsConfig } from '@/services/hosts/Service';
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
 import { IRootState } from '../Types';
 import { IHost, IHostsState } from './Types';
 
 export enum mutators {
-  LOADING = 'LOADING',
+  SET_HOST_LOADING = 'SET_HOST_LOADING',
   SET_HOSTS = 'SET_HOSTS',
+  SET_HOST_STATS = 'SET_HOST_STATS',
 }
 
 export const state: IHostsState = {
   hosts: [],
-  loading: false,
 };
 
 export const getters: GetterTree<IHostsState, IRootState> = {
   hosts: (_state) => _state.hosts,
-  loading: (_state) => _state.loading,
 };
 
 export const actions: ActionTree<IHostsState, IRootState> = {
   async getHosts({ commit, dispatch }) {
-    commit(mutators.LOADING, true);
-
     const hosts: IHost[] = parseHostsConfig();
     commit(mutators.SET_HOSTS, hosts);
 
     dispatch('getAllHostsOverview');
   },
 
-  async getAllHostsOverview({ commit, state }) {
-    commit(mutators.LOADING, true);
+  async getHostOverview({ commit }, host: IHost) {
+    commit(mutators.SET_HOST_LOADING, {
+      hostname: host.hostname,
+      loading: true,
+    });
 
-    Promise.all(
-      state.hosts.map((host: IHost) => {
-        return axios
-          .get(`${host.url}/all`)
-          .then(({ data }) => console.log(data));
-      })
-    ).then((responses) => console.log(responses));
+    const stats = await getAllStats(host.url);
+    commit(mutators.SET_HOST_STATS, { hostname: host.hostname, stats });
+
+    commit(mutators.SET_HOST_LOADING, {
+      hostname: host.hostname,
+      loading: false,
+    });
+  },
+
+  async getAllHostsOverview({ dispatch, state }) {
+    for (const key in state.hosts) {
+      dispatch('getHostOverview', state.hosts[key]);
+    }
   },
 };
 
@@ -46,8 +52,23 @@ export const mutations: MutationTree<IHostsState> = {
   [mutators.SET_HOSTS](_state: IHostsState, hosts: IHost[]) {
     _state.hosts = hosts;
   },
-  [mutators.LOADING](_state: IHostsState, loading: boolean) {
-    _state.loading = loading;
+  [mutators.SET_HOST_LOADING](_state: IHostsState, { hostname, loading }) {
+    const key: number = _state.hosts.findIndex(
+      (currentHost) => currentHost.hostname === hostname
+    );
+
+    if (key >= 0) {
+      _state.hosts[key].loading = loading;
+    }
+  },
+  [mutators.SET_HOST_STATS](_state: IHostsState, { hostname, stats }) {
+    const key: number = _state.hosts.findIndex(
+      (currentHost) => currentHost.hostname === hostname
+    );
+
+    if (key >= 0) {
+      _state.hosts[key].stats = stats;
+    }
   },
 };
 

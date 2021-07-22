@@ -1,5 +1,5 @@
 import { IHost } from '@/store/hosts/Types';
-import config from '../../hosts.yaml';
+import config from '../../../hosts.yaml';
 
 export function parseHostsConfig(): IHost[] {
   const hosts: IHost[] = [];
@@ -18,10 +18,11 @@ export function parseHostsConfig(): IHost[] {
     );
 
     hosts.push({
-      name: host,
+      hostname: host,
       label: config[host].label ?? host,
       url,
-      stats: [],
+      stats: null,
+      loading: false,
     });
   }
 

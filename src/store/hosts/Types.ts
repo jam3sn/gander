@@ -1,23 +1,23 @@
 export interface IHostsState {
   hosts: IHost[],
-  loading: boolean,
 };
 
 export interface IHost {
-  name: string,
+  hostname: string,
   label: string,
   url: string,
-  stats: IHostStats | [],
+  stats: IHostStats | null,
+  loading: boolean,
 }
 
 export interface IHostStats {
   cpu: number,
-  perCpu: [ICpuDetails],
+  perCpu: ICpuDetails[],
   memory: number
-  network: [INicDetails]
-  sensors: [ISensorDetails]
+  network: INicDetails[]
+  sensors: ISensorDetails[]
   system: ISystemDetails
-  filesystem: [IFsDetails]
+  filesystem: IFsDetails[]
   uptime: string
 };
   
