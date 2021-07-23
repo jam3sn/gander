@@ -1,17 +1,1 @@
-alfred:
-  label: Alfred
-  ip: 192.168.1.2
-  port: 61208
-  ssl: false
 
-nolan:
-  label: Nolan
-  ip: 192.168.1.3
-  port: 61208
-  ssl: false
-
-ivy:
-  label: Ivy
-  ip: 192.168.1.4
-  port: 61208
-  ssl: false
