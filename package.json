@@ -14,10 +14,7 @@
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "date-fns": "^2.22.1",
-    "dotenv": "^8.6.0",
     "postcss": "^7.0.36",
-    "register-service-worker": "^1.7.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.4",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
@@ -25,8 +22,6 @@
     "vuex-class": "^0.3.2"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/js-yaml": "^4.0.2",
     "@types/node": "^16.3.3",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -46,7 +41,6 @@
     "eslint-plugin-vue": "^7.0.0",
     "prettier": "^2.2.1",
     "typescript": "~4.1.5",
-    "vue-cli-plugin-yaml": "^1.0.2",
-    "vue-jest": "^5.0.0-0"
+    "vue-cli-plugin-yaml": "^1.0.2"
   }
 }
