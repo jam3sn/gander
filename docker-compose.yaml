@@ -2,14 +2,10 @@ version: "3"
 
 services: 
   gander:
-    build:
-      args:
-        user: gander
-        uid: 1001
-      context: .
-      dockerfile: Dockerfile
-    image: gander
+    image: jam3sn/gander
     container_name: gander
     ports: 
       - '8080:8080'
+    volumes: 
+      - './hosts.yaml:/hosts.yaml'
     restart: unless-stopped
