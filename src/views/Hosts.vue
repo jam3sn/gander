@@ -1,13 +1,13 @@
 <template>
   <header class="mb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold leading-tight text-gray-900">
-        Hosts
+      <h1 class="text-3xl font-bold leading-tight text-gray-500">
+        All Hosts
       </h1>
     </div>
   </header>
   <main>
-    <div class="max-w-7xl mx-auto grid grid-cols-1 gap-5 sm:items-top md:grid-cols-2 sm:px-6 lg:px-8 xl:grid-cols-3">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 gap-5 px-4 sm:items-top md:grid-cols-2 sm:px-6 lg:px-8 xl:grid-cols-3">
       <Host v-for="host in hosts" :key="host.hostname" :host="host" />
     </div>
   </main>
@@ -31,8 +31,13 @@ export default class Hosts extends Vue {
   @Action('getHosts', { namespace: 'hosts' })
   getHosts!: () => void;
 
+  @Action('getAllHostsOverview', { namespace: 'hosts' })
+  getAllHostsOverview!: () => void;
+
   mounted(): void {
     this.getHosts();
+
+    setInterval(() => this.getAllHostsOverview(), 30000);
   }
 }
 </script>
